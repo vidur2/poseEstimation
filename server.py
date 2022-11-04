@@ -14,6 +14,7 @@ app = Flask(__name__)
 from scipy.interpolate import splprep, splev, splder, splrep, BSpline
 
 def writeToFile(obj, fileName):
+    print(obj)
     with open(f"./{fileName}.pickle", 'wb') as f:
         f.write(codecs.encode(pickle.dumps(obj), "base64"))
 
@@ -53,7 +54,7 @@ def index():
 
 @app.route("/aprilPos", methods=["POST"])
 def loadTransMatrix():
-    body = json.loads(json.loads(request.get_data()))
+    body = json.loads(request.get_data())
 
     aprilPose = body["aprilPose"]
 
@@ -62,25 +63,25 @@ def loadTransMatrix():
 
         # Defining translation matrix
         translMatrix = np.eye(2)
-        translMatrix[0][1] = tag["y_val"]
-        translMatrix[1][0] = tag["x_val"]
+        translMatrix[0][1] = tag["y"]
+        translMatrix[1][0] = tag["x"]
 
         # Defining Rotation matrix
         deg = None
 
-        if (tag["orientation"] == "R"):
+        if (tag["rotation"] == "R"):
             deg = 0
             pass
-        elif (tag["orientation"] == "L"):
+        elif (tag["rotation"] == "L"):
             deg = 180
             pass
-        elif (tag["orientation"] == "U"):
+        elif (tag["rotation"] == "U"):
             deg = 90
             pass
         else:
             deg = 270
             pass
-        rotMatrix = np.arr([
+        rotMatrix = np.array([
             [cos(deg), -sin(deg)],
             [sin(deg), cos(deg)]
         ])
