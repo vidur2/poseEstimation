@@ -16,13 +16,26 @@ def main():
         with open(func, 'rb') as f:
             obj = loads(codecs.decode(f.read(), "base64"))
             funcsParsed[func] = obj
-    print(splev(0, funcsParsed["./t_x.pickle"]["self"]))
-    # for res in apriltag_video.apriltag_video(input_streams=[0]):
-    #     pose = res[1]
-    #     tEq = splev(pose[0], obj["t_x"]["self"])
-    #     tVer = splev(pose[1], obj["t_y"]["self"])
-    #     xSpeed= splev(tEq, obj["x_t"]["diff"])
-    #     ySpeed = splev(tVer, obj["y_t"]["diff"])
+
+    # alignToStart()
+    for res in apriltag_video.apriltag_video(input_streams=[0]):
+        pose = res[1]
+        tEq = splev(pose[0], obj["t_x"]["self"])
+        tVer = splev(pose[1], obj["t_y"]["self"])
+        xSpeed= splev(tEq, obj["x_t"]["diff"])
+        ySpeed = splev(tVer, obj["y_t"]["diff"])
+
+def alignToStart():
+    targetX = splev(0, obj["x_t"]["self"])
+    targetY = splev(0, obj["y_t"]["self"])
+    for pose in apriltag_video.apriltag(input_streams=[0]):
+        velX = -(pose[0] - targetX)
+        velY = -(pose[1] - targetY)
+
+        # TODO send values over NT
+
+        if (abs(velX) < .1 and abs(velY) < .1):
+            return
 
 if __name__ == '__main__':
     main()
