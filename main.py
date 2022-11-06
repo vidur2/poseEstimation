@@ -38,8 +38,8 @@ def main():
             for pose in poses:
                 center += pose
             center = center/4
-            tEq = splev(pose[0], funcsParsed["./t_x.pickle"]["self"])
-            tVer = splev(pose[1], funcsParsed["./t_y.pickle"]["self"])
+            tEq = splev(center[0], funcsParsed["./t_x.pickle"]["self"])
+            tVer = splev(center[4], funcsParsed["./t_y.pickle"]["self"])
             xSpeed= splev(tEq, funcsParsed["./x_t.pickle"]["diff"])
             ySpeed = splev(tVer, funcsParsed["./y_t.pickle"]["diff"])
 
