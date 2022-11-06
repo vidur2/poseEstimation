@@ -2,15 +2,28 @@ import sys
 from pickle import loads
 import codecs
 from scipy.interpolate import splev
+import numpy as np
 
 sys.path.append("../AprilTag/scripts")
 
 import apriltag_video
+from networktables import NetworkTables, NetworkTablesInstance
 
 funcPaths = ["./t_x.pickle", "./t_y.pickle", "./x_t.pickle", "./y_t.pickle"]
 err = 0.5
 
+NetworkTables.initialize(server="10.51.09.2")
+
+def initializeNtwrk():
+    ntwrkInst = NetworkTablesInstance.create()
+    table = ntwrkInst.getTable(key="SmartDashboard")
+    return table
+
 def main():
+    
+    # sd = initializeNtwrk()
+
+
     funcsParsed = {}
     for func in funcPaths:
         with open(func, 'rb') as f:
@@ -19,13 +32,21 @@ def main():
 
     # alignToStart()
     for res in apriltag_video.apriltag_video(input_streams=[0]):
-        pose = res[1]
-        tEq = splev(pose[0], obj["t_x"]["self"])
-        tVer = splev(pose[1], obj["t_y"]["self"])
-        xSpeed= splev(tEq, obj["x_t"]["diff"])
-        ySpeed = splev(tVer, obj["y_t"]["diff"])
+        if (res != []):
+            poses = res[1]
+            center = np.zeros(4)
+            for pose in poses:
+                center += pose
+            center = center/4
+            tEq = splev(pose[0], funcsParsed["./t_x.pickle"]["self"])
+            tVer = splev(pose[1], funcsParsed["./t_y.pickle"]["self"])
+            xSpeed= splev(tEq, funcsParsed["./x_t.pickle"]["diff"])
+            ySpeed = splev(tVer, funcsParsed["./y_t.pickle"]["diff"])
 
-def alignToStart():
+            # sd.putNumber("xSpeed", xSpeed)
+            # sd.putNumber("ySpeed", ySpeed)
+
+def alignToStart(obj):
     targetX = splev(0, obj["x_t"]["self"])
     targetY = splev(0, obj["y_t"]["self"])
     for pose in apriltag_video.apriltag(input_streams=[0]):
