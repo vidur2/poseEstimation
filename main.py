@@ -32,7 +32,7 @@ def main():
 
     # alignToStart()
     for res in apriltag_video.apriltag_video(input_streams=[0]):
-        if (res != []):
+        if (len(res)):
             poses = res[1]
             center = np.zeros(4)
             for pose in poses:
