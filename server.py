@@ -56,6 +56,7 @@ def index():
             "diff2": der2,
             "lastPose": lastPose
         }
+        print(spline_out)
         f.write(codecs.encode(pickle.dumps(spline_out), "base64"))
     return "good"
 

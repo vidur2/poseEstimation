@@ -7,7 +7,7 @@ sys.path.append("../AprilTag/scripts")
 
 import apriltag_video
 
-with open("./x_y.pickle", 'rb') as f:
+with open("./y_x.pickle", 'rb') as f:
     path = loads(codecs.decode(f.read(), "base64"))
 
 path = None
