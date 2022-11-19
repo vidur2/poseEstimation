@@ -1,6 +1,14 @@
 from scipy.interpolate import splev
 from math import e
 from motor import Motor
+import sys
+
+sys.path.append("../AprilTag/scripts")
+
+import apriltag_video
+
+with open("./x_y.pickle", 'rb') as f:
+    path = loads(codecs.decode(f.read(), "base64"))
 
 path = None
 maxPowah = 1
@@ -25,8 +33,18 @@ def getPower(currX, currY):
     return adjPower(kappa)
 
 def main():
-    with open("./x_y.pickle", 'rb') as f:
-        path = loads(codecs.decode(f.read(), "base64"))
+    lastPose = path["lastPose"]
+
+    for pos in apriltag_video.apriltag_video([0]):
+        yVal = pose[2][3]
+        xVal = pose[0][3]
+
+        if (abs(lastPose - xVal) < 0.1 and abs(lastPose - yVal) < 0.1):
+            break
+        
+        rPower, lPower = getPower(xVal, yVal)
+
+        # TODO power goes here
 
 
 if (__name__== "__main__"):
