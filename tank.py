@@ -34,7 +34,8 @@ def getPower(currX, currY):
 
 def main():
     lastPose = path["lastPose"]
-
+    lMotor = Motor(16, 25, 12, False)
+    rMotor = Motor(5, 6, 13, True)
     for pos in apriltag_video.apriltag_video([0]):
         yVal = pose[2][3]
         xVal = pose[0][3]
@@ -44,7 +45,8 @@ def main():
         
         rPower, lPower = getPower(xVal, yVal)
 
-        # TODO power goes here
+        lMotor.forward(lPower)
+        rMotor.forward(rPower)
 
 
 if (__name__== "__main__"):

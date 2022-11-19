@@ -19,7 +19,7 @@ class Motor:
     def forward(self, power: float):
         adjPower = power * 100
 
-        if (self.polarity):
+        if (not self.polarity):
             GPIO.output(in1,GPIO.HIGH)
             GPIO.output(in2,GPIO.LOW)
         else:
