@@ -47,6 +47,8 @@ def main():
 
         lMotor.forward(lPower)
         rMotor.forward(rPower)
+    lMotor.forward(0)
+    rMotor.forward(0)
 
 
 if (__name__== "__main__"):

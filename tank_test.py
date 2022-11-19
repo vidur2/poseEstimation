@@ -9,5 +9,5 @@ def test():
     lMotor.forward(lPower)
     rMotor.forward(rPower)
     sleep(2)
-    rMotor.p.stop()
-    lMotor.p.stop()
+    rMotor.forward(0)
+    lMotor.forward(0)
