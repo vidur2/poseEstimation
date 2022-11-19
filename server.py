@@ -29,25 +29,29 @@ def index():
     der = None
     tck = None
     diff = False
-    if (graph_type[len(graph_type) - 1] == 't'):
+    der2 = None
+    if (graph_type[len(graph_type) - 1] == 't' or graph_type == 'x_y'):
         diff = True
         tck = splrep(x_arr, y_arr, s = 0)
         splder(tck)
         der = BSpline(t=tck[0], c=tck[1], k=tck[2]).derivative(1)
+        der2 = BSpline(t=tck[0], c=tck[1], k=tck[2]).derivative(2)
     else:
         tck, u = splprep([x_arr, y_arr], s=0)
     
 
-    writeToFile({
-            "self": tck,
-            "diff": der
-        }, 
-        graph_type
-    )
+    # writeToFile({
+    #         "self": tck,
+    #         "diff": der,
+    #         "diff2": der2
+    #     }, 
+    #     graph_type
+    # )
     with open(f"./{graph_type}.pickle", 'wb') as f:
         spline_out = {
             "self": tck,
-            "diff": der
+            "diff": der,
+            "diff2": der2
         }
         f.write(codecs.encode(pickle.dumps(spline_out), "base64"))
     return "good"
