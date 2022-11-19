@@ -7,6 +7,7 @@ from enum import Enum
 import pickle
 import codecs
 from math import cos, sin
+from xyCoord import XyCoord
 # import matplotlib.pyplot as plt
 
 app = Flask(__name__)
@@ -17,6 +18,12 @@ def writeToFile(obj, fileName):
     print(obj)
     with open(f"./{fileName}.pickle", 'wb') as f:
         f.write(codecs.encode(pickle.dumps(obj), "base64"))
+
+def sortList(xArr, yArr):
+    stack = [XyCoord(x, y) for x, y in zip(xArr, yArr)]
+    stack.sort()
+
+    return [i.x for i in stack], [i.y for i in stack]
 
 @app.route("/", methods=["POST"])
 def index():
@@ -33,6 +40,8 @@ def index():
     lastPose = None
     if (graph_type[len(graph_type) - 1] == 't' or graph_type == 'x_y'):
         diff = True
+        if graph_type == 'x_y':
+            x_arr, y_arr = sortList(x_arr, y_arr)
         tck = splrep(x_arr, y_arr, s = 0)
         splder(tck)
         der = BSpline(t=tck[0], c=tck[1], k=tck[2]).derivative(1)
@@ -56,7 +65,6 @@ def index():
             "diff2": der2,
             "lastPose": lastPose
         }
-        print(spline_out)
         f.write(codecs.encode(pickle.dumps(spline_out), "base64"))
     return "good"
 
