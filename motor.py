@@ -14,7 +14,7 @@ class Motor:
         GPIO.output(in2,GPIO.LOW)
 
         self.p=GPIO.PWM(en,1000)
-        self.p.start(25)
+        self.p.start(0)
     
     def forward(self, power: float):
         adjPower = power * 100
