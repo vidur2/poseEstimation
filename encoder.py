@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 
 class Encoder:
     def __init__(self, port):
-        self.velocity = 0
+        self.secsBetweenTicks = 0
         self.position = 0
 
         self.prevTime = time.time()
@@ -17,13 +17,14 @@ class Encoder:
 
     def setVelocity(self):
         self.position += 1
-        self.velocity = 1/(time.time() - self.prevTime)
+        if (self.position % 8 == 0):
+            self.velocity = time.time() - self.prevTime
 
     def resetVelocity(self):
         self.prevTime = time.time()
 
     def getVelocity(self):
-        return self.velocity
+        return 1/self.secsBetweenTicks * (self.secsBetweenTicks != 0)
     
     def getPosition(self):
         return self.position
