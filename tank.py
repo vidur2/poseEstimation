@@ -26,7 +26,7 @@ def adjPower(curvature):
     if (curvature >= 0):
         return (maxPowah, transform(curvature))
     else:
-        return (transform(curvature), maxPowah)
+        return (transform(abs(curvature)), maxPowah)
 
 def getPower(currX, currY):
     kappa = curvature(currX, currY)
@@ -43,7 +43,7 @@ def main():
         if (abs(lastPose - xVal) < 0.1 and abs(lastPose - yVal) < 0.1):
             break
         
-        lPower, rPower = getPower(xVal, yVal)
+        rPower, lPower = getPower(xVal, yVal)
 
         lMotor.forward(lPower)
         rMotor.forward(rPower)
