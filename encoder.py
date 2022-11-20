@@ -15,7 +15,7 @@ class Encoder:
         GPIO.add_event_detect(port, GPIO.FALLING, callback=self.setVelocity)
         # GPIO.add_event_detect(port, GPIO.RISING, callback=self.setVelocity)
 
-    def setVelocity(self):
+    def setVelocity(self, channel):
         self.position += 1
         if (self.position % 8 == 0):
             self.secsBetweenTicks = time.time() - self.prevTime
