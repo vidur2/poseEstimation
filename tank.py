@@ -38,7 +38,7 @@ def main():
     rMotor = Motor(5, 6, 13, True)
     for pos in apriltag_video.apriltag_video([0]):
         yVal = pose[2][3]
-        xVal = pose[0][3]
+        xVal = -pose[0][3]
 
         if (abs(lastPose - xVal) < 0.1 and abs(lastPose - yVal) < 0.1):
             break
