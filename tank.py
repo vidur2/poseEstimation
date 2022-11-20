@@ -43,7 +43,7 @@ def main():
         if (abs(lastPose - xVal) < 0.1 and abs(lastPose - yVal) < 0.1):
             break
         
-        rPower, lPower = getPower(xVal, yVal)
+        lPower, rPower = getPower(xVal, yVal)
 
         lMotor.forward(lPower)
         rMotor.forward(rPower)
