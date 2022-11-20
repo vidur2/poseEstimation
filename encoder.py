@@ -12,7 +12,7 @@ class Encoder:
 
         GPIO.setup(port, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        GPIO.add_event_detect(port, GPIO.FALLING, callback=self.resetVelocity)
+        GPIO.add_event_detect(port, GPIO.FALLING, callback=self.setVelocity())
         # GPIO.add_event_detect(port, GPIO.RISING, callback=self.setVelocity)
 
     def setVelocity(self):
