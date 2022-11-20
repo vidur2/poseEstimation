@@ -14,9 +14,10 @@ def test():
     rMotor.forward(0.25)
     startTime = time()
 
-    while (time - startTime < 2):
+    while (time() - startTime < 2):
         print(rEncoder.getVelocity())
         print(lEncoder.getVelocity())
+
     rMotor.forward(0)
     lMotor.forward(0)
 
