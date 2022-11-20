@@ -58,7 +58,9 @@ def main():
             break
         
         rPower, lPower = getPower(xVal)
-
+        rRatio = rPower * 25
+        lPower = lPower * 25
+        
         lMotor.forward(lPower)
         rMotor.forward(rPower)
     lMotor.forward(0)

@@ -20,12 +20,12 @@ class Motor:
         adjPower = power * 100
 
         if (not self.polarity):
-            GPIO.output(in1,GPIO.HIGH)
-            GPIO.output(in2,GPIO.LOW)
+            GPIO.output(self.in1,GPIO.HIGH)
+            GPIO.output(self.in2,GPIO.LOW)
         else:
-            GPIO.output(in1,GPIO.LOW)
-            GPIO.output(in2,GPIO.HIGH)
-        p.ChangeDutyCycle(adjPower)
+            GPIO.output(self.in1,GPIO.LOW)
+            GPIO.output(self.in2,GPIO.HIGH)
+        self.p.ChangeDutyCycle(adjPower)
 
     def backward(self, power: float):
         self.polarity = not self.polarity
