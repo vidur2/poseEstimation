@@ -25,7 +25,7 @@ class Encoder:
         self.prevTime = time.time()
 
     def getVelocity(self):
-        if (self.secsBetweenTicks != 0 and time.time() - self.prevTime > 1):
+        if (self.secsBetweenTicks != 0 and time.time() - self.prevTime < 1):
             return (1/self.secsBetweenTicks)
         else:
             return 0
