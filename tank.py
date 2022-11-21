@@ -56,13 +56,13 @@ def main():
     rEncoder = Encoder(4)
     lEncoder = Encoder(26)
 
-    rController = Overspeed(rMotor, rEncoder, 0, minPow=.25)
-    lController = Overspeed(lMotor, lEncoder, 0, maxPow=.7)
+    rController = Overspeed(rMotor, rEncoder, 0, 1, .25)
+    lController = Overspeed(lMotor, lEncoder, 0, .7)
 
     
     for pos in apriltag_video.apriltag_video([0]):
         yVal = pose[2][3]/5.2
-        xVal = -pose[0][3]
+        xVal = pose[0][3]
 
         if (abs(lastPose - xVal) < 0.1 and abs(lastPose - yVal) < 0.1):
             break
