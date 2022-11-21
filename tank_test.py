@@ -18,6 +18,8 @@ def test():
     while (time() - startTime < 10):
         print(rEncoder.getVelocity())
         print(lEncoder.getVelocity())
+        rMotorController.followVelocity()
+        lMotorController.followVelocity()
 
     rMotor.forward(0)
     lMotor.forward(0)
