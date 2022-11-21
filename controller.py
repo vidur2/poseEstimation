@@ -14,7 +14,7 @@ class Overspeed:
     
     def followVelocity(self):
         if (self.encoder.getVelocity() >= self.desiredVel):
-            self.motor.forward(0)
+            self.motor.forward(self.minPow)
         else:
-            self.motor.forward(maxPow)
+            self.motor.forward(self.maxPow)
 

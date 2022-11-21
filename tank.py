@@ -1,6 +1,8 @@
 from scipy.interpolate import splev
 from math import e
 from motor import Motor
+from encoder import Encoder
+from controller import Overspeed
 import sys
 
 sys.path.append("../AprilTag/scripts")
@@ -50,6 +52,14 @@ def main():
     lastPose = path["lastPose"]
     lMotor = Motor(16, 25, 12, False)
     rMotor = Motor(5, 6, 13, True)
+
+    rEncoder = Encoder(4)
+    lEncoder = Encoder(26)
+
+    rController = Overspeed(rMotor, rEncoder, 0, minPow=.25)
+    lController = Overspeed(lMotor, lEncoder, 0, maxPow=.7)
+
+    
     for pos in apriltag_video.apriltag_video([0]):
         yVal = pose[2][3]
         xVal = -pose[0][3]
@@ -58,11 +68,14 @@ def main():
             break
         
         rPower, lPower = getPower(xVal)
-        rRatio = rPower * 25
-        lPower = lPower * 25
+        rRatio = rPower * 50
+        lPower = lPower * 50
         
-        lMotor.forward(lPower)
-        rMotor.forward(rPower)
+        rController.setDesiredVel(rRatio)
+        lController.setDesiredVel(lRatio)
+
+        lController.followVelocity()
+        rController.followVelocity()
     lMotor.forward(0)
     rMotor.forward(0)
 
