@@ -1,6 +1,7 @@
 from motor import Motor
 from time import sleep, time
 from encoder import Encoder
+from controller import Overspeed
 
 
 def test():
@@ -8,13 +9,13 @@ def test():
     rMotor = Motor(5, 6, 13, True)
 
     rEncoder = Encoder(4)
-    lEncoder = Encoder(17)
+    lEncoder = Encoder(26)
 
-    lMotor.forward(0.25)
-    rMotor.forward(0.25)
+    lMotorController = Overspeed(lMotor, lEncoder, 25)
+    rMotorController = Overspeed(rMotor, rEncoder, 25)
     startTime = time()
 
-    while (time() - startTime < 2):
+    while (time() - startTime < 10):
         print(rEncoder.getVelocity())
         print(lEncoder.getVelocity())
 
