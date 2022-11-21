@@ -61,7 +61,7 @@ def main():
 
     
     for pos in apriltag_video.apriltag_video([0]):
-        yVal = pose[2][3]
+        yVal = pose[2][3]/5.2
         xVal = -pose[0][3]
 
         if (abs(lastPose - xVal) < 0.1 and abs(lastPose - yVal) < 0.1):
