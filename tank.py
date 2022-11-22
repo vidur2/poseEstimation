@@ -77,6 +77,9 @@ def main():
 
             lController.followVelocity()
             rController.followVelocity()
+        else:
+            lMotor.forward(0)
+            rMotor.forward(0)
     lMotor.forward(0)
     rMotor.forward(0)
 
