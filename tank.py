@@ -74,7 +74,8 @@ def main():
             
             rController.setDesiredVel(rRatio)
             lController.setDesiredVel(lRatio)
-
+            
+            # Maybe continue velocity if unseen?
             lController.followVelocity()
             rController.followVelocity()
         else:
