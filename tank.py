@@ -61,21 +61,22 @@ def main():
 
     
     for pos in apriltag_video.apriltag_video([0]):
-        yVal = pose[2][3]/5.2
-        xVal = pose[0][3]
+        if (len(pos)):
+            yVal = pose[2][3]/5.2
+            xVal = pose[0][3]
 
-        if (abs(lastPose - xVal) < 0.1 and abs(lastPose - yVal) < 0.1):
-            break
-        
-        rPower, lPower = getPower(xVal)
-        rRatio = rPower * 50
-        lPower = lPower * 50
-        
-        rController.setDesiredVel(rRatio)
-        lController.setDesiredVel(lRatio)
+            if (abs(lastPose - xVal) < 0.1 and abs(lastPose - yVal) < 0.1):
+                break
+            
+            rPower, lPower = getPower(xVal)
+            rRatio = rPower * 50
+            lPower = lPower * 50
+            
+            rController.setDesiredVel(rRatio)
+            lController.setDesiredVel(lRatio)
 
-        lController.followVelocity()
-        rController.followVelocity()
+            lController.followVelocity()
+            rController.followVelocity()
     lMotor.forward(0)
     rMotor.forward(0)
 
