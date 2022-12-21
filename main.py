@@ -22,7 +22,7 @@ def initializeNtwrk():
 
 def main():
     
-    # sd = initializeNtwrk()
+    sd = initializeNtwrk()
 
 
     funcsParsed = {}
@@ -31,9 +31,9 @@ def main():
             obj = loads(codecs.decode(f.read(), "base64"))
             funcsParsed[func] = obj
 
-    offset = None
-    with open(matrixPath, 'rb') as f:
-        offset = loads(codecs.decode(f.read(), "base64"))
+    # offset = None
+    # with open(matrixPath, 'rb') as f:
+    #     offset = loads(codecs.decode(f.read(), "base64"))
 
     # alignToStart()
     for res in apriltag_video.apriltag_video(input_streams=[0]):
@@ -49,8 +49,8 @@ def main():
             xSpeed= splev(tEq, funcsParsed["./x_t.pickle"]["diff"])
             ySpeed = splev(tVer, funcsParsed["./y_t.pickle"]["diff"])
 
-            # sd.putNumber("xSpeed", xSpeed)
-            # sd.putNumber("ySpeed", ySpeed)
+            sd.putNumber("xSpeed", xSpeed)
+            sd.putNumber("ySpeed", ySpeed)
 
 def alignToStart(obj):
     targetX = splev(0, obj["x_t"]["self"])
